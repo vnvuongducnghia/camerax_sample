@@ -5,7 +5,6 @@ import android.content.Intent
 import android.media.MediaScannerConnection
 import android.os.Build
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +13,7 @@ import android.widget.ImageButton
 import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.FileProvider
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.navigation.fragment.navArgs
@@ -96,7 +96,8 @@ class GalleryFragment internal constructor() : Fragment() {
                         .getMimeTypeFromExtension(mediaFile.extension)
                     // Get URI from our FileProvider implementation
                     val uri = FileProvider.getUriForFile(
-                        view.context, BuildConfig.APPLICATION_ID + ".provider", mediaFile)
+                        view.context, BuildConfig.APPLICATION_ID + ".provider", mediaFile
+                    )
                     // Set the appropriate intent extra, type, action and flags
                     putExtra(Intent.EXTRA_STREAM, uri)
                     type = mediaType
@@ -124,7 +125,8 @@ class GalleryFragment internal constructor() : Fragment() {
 
                         // Send relevant broadcast to notify other apps of deletion
                         MediaScannerConnection.scanFile(
-                            view.context, arrayOf(mediaFile.absolutePath), null, null)
+                            view.context, arrayOf(mediaFile.absolutePath), null, null
+                        )
 
                         // Notify our view pager
                         mediaList.removeAt(mediaViewPager.currentItem)
@@ -134,7 +136,8 @@ class GalleryFragment internal constructor() : Fragment() {
                         if (mediaList.isEmpty()) {
                             fragmentManager?.popBackStack()
                         }
-                    }}
+                    }
+                }
 
                 .setNegativeButton(android.R.string.no, null)
                 .create().showImmersive()
